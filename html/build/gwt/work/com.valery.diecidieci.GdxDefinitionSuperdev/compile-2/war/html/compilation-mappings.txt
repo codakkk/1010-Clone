@@ -1,0 +1,25 @@
+F95FADE4A2D123FA3A100675529DEFEC.cache.js
+ClientBundle.enableInlining true
+audioElementSupport maybe
+canvasElementSupport maybe
+compiler.emulatedStack false
+compiler.predeclare.cross.fragment.references false
+compiler.stackMode native
+compiler.useSourceMaps true
+compiler.useSymbolMaps false
+dragEventSupport maybe
+geolocationSupport maybe
+gwt.enableDebugId false
+gwt.forceBidi false
+gwt.logging.enabled FALSE
+gwt.suppressNonStaticFinalFieldWarnings false
+gwt.unloadEnabled false
+locale default
+storageSupport maybe
+superdevmode on
+touchEventSupport maybe
+user.agent safari
+videoElementSupport maybe
+webApiUsage modern
+
+Devmode:devmode.js
