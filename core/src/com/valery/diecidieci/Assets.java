@@ -12,7 +12,7 @@ public class Assets {
     public static Texture[] blocksColors;
     public static BitmapFont font;
 
-	public static boolean FACES = true;
+	public static Texture retryButton;
 
     public static void init(){
     	blocksColors = new Texture[10];
@@ -26,7 +26,7 @@ public class Assets {
     	blocksColors[7] = new Texture(Gdx.files.internal("data/red.png"));
     	blocksColors[8] = new Texture(Gdx.files.internal("data/teal.png"));
     	blocksColors[9] = new Texture(Gdx.files.internal("data/yellow.png"));
-		if(FACES == true) {
+		if(Configs.FACES == true) {
 			blocksColors[1] = new Texture(Gdx.files.internal("data/tony.png"));
 			blocksColors[2] = new Texture(Gdx.files.internal("data/dad.png"));
 			blocksColors[3] = new Texture(Gdx.files.internal("data/mum.png"));
@@ -34,6 +34,7 @@ public class Assets {
 			blocksColors[5] = new Texture(Gdx.files.internal("data/son2.png"));
 			//blocksColors[5] = new Texture(Gdx.files.internal("data/susy.png"));
 		}
+		retryButton = new Texture(Gdx.files.internal("data/retryButton.png"));
     	font = new BitmapFont();
     	//font.getData().setScale(0.2f);
     }
@@ -42,5 +43,6 @@ public class Assets {
         for(int x = 0; x < 10; x++){
         	blocksColors[x].dispose();
         }
-    }
+		retryButton.dispose();
+	}
 }

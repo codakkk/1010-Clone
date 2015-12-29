@@ -49,7 +49,13 @@ public enum ShapeType {
 	 *   @
 	 *   @
 	 */
-	UP_L5;
+	UP_L5,
+	/*
+	 * @@@
+	 * @@@
+	 * @@@
+	 */
+	THREEXTHREE;
 	
 	ShapeType(){
 		
@@ -117,6 +123,9 @@ public enum ShapeType {
 		case UP_L3:
 			int map18[][]= {{0, 1}, {1, 1}};
 			return map18;
+		case THREEXTHREE:
+			int map19[][] = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+			return map19;
 		default:
 			break;
 		}
@@ -125,10 +134,12 @@ public enum ShapeType {
 	}
 	
 	public int getShapeColor(){
-		if(Assets.FACES){
+		if(Configs.FACES){
 			switch(this){
 				case SQUARE:
-					return 5;
+					return 3;
+				case SINGLE:
+					return 6;
 				case HORIZONTAL2:
 				case HORIZONTAL3:
 				case HORIZONTAL4:
@@ -143,7 +154,7 @@ public enum ShapeType {
 				case DOWN_L3:
 				case RIGHT_L3:
 				case UP_L3:
-					return 3;
+					return 2;
 				case LEFT_L5:
 				case DOWN_L5:
 				case RIGHT_L5:
@@ -154,15 +165,31 @@ public enum ShapeType {
 		} else {
 			switch (this) {
 				case SQUARE:
-					return 1;
-				case HORIZONTAL2:
-					return 2;
-				case HORIZONTAL3:
 					return 3;
-				case HORIZONTAL4:
+				case VERTICAL2:
+				case HORIZONTAL2:
 					return 9;
+				case VERTICAL3:
+				case HORIZONTAL3:
+					return 4;
+				case VERTICAL4:
+				case HORIZONTAL4:
+					return 5;
+				case VERTICAL5:
 				case HORIZONTAL5:
-					return 1;
+					return 7;
+				case LEFT_L3:
+				case DOWN_L3:
+				case RIGHT_L3:
+				case UP_L3:
+					return 2;
+				case LEFT_L5:
+				case DOWN_L5:
+				case RIGHT_L5:
+				case UP_L5:
+					return 8;
+                case THREEXTHREE:
+                    return 1;
 				default:
 					return 9;
 			}

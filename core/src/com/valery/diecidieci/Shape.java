@@ -26,8 +26,9 @@ public class Shape {
 		this.color = shapeType.getShapeColor();
 		this.blockSize = Configs.SMALL_BLOCK_SIZE;
 		this.mapBlocks = this.shapeType.getShape();
-		this.blocks = new Block[this.mapBlocks.length + this.mapBlocks[0].length];
-		for(int xx = 0; xx < this.blocks.length; xx++){
+		this.blocks = new Block[this.mapBlocks.length * this.mapBlocks[0].length];
+		System.out.println(blocks.length);
+		for(int xx = 0; xx < blocks.length; xx++){
 			this.blocks[xx] = new Block(color);
 		}
 	}

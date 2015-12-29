@@ -48,53 +48,61 @@ public class TenTen extends ApplicationAdapter {
 
 	public void reset(){
 		this.points = 0;
+		this.currentShape = null;
 		this.table.reset();
+		gameState = GameState.PLAYING_STATE;
 		fillShapes();
 	}
 	
 	public void update(){
 		updatePosition();
 
-		if(Gdx.input.justTouched()){
-			for(int x = 0; x < 3; x++){
-				if(shapes[x] == null)continue;
-				if(shapes[x].isColliding(touchPosition)){
-					this.currentShape = shapes[x];
-					this.currentShapeID = x;
-					shapes[x].touch();
-				}
+		if(gameState == GameState.PLAYING_STATE) {
+			if(!this.canPlaceShapes()){
+				gameState = GameState.GAMEOVER_STATE;
+				return;
 			}
-		}
-		if(this.currentShape != null){
-			if(Gdx.input.isTouched()){
-				this.currentShape.x = (int) touchPosition.x - this.currentShape.getShapeWidth()/2;
-				this.currentShape.y = (int) touchPosition.y + this.currentShape.getShapeHeight()/2;
-			} else {
-				if(table.place(this.currentShape)){
-					points += (this.currentShape.blocks.length-1) + (table.clearLines());
-					this.shapes[this.currentShapeID] = null;
-					this.currentShape = null;
-					if(!hasShapes()){
-						fillShapes();
+			if (Gdx.input.justTouched()) {
+				for (int x = 0; x < 3; x++) {
+					if (shapes[x] == null) continue;
+					if (shapes[x].isColliding(touchPosition)) {
+						this.currentShape = shapes[x];
+						this.currentShapeID = x;
+						shapes[x].touch();
 					}
-				}else {
-					this.currentShape.release();
-					this.currentShape.x = this.nextXcoordAt(this.currentShapeID);
-					this.currentShape.y = this.nextYcoordAt(this.currentShapeID);
-					this.currentShape = null;
 				}
 			}
-		}else {
-			
-		}
-		int count = 0;
-		for(int x = 0; x < 3; x++){
-			if(this.shapes[x] == null)continue;
-			if(table.isPlaceable(shapes[x]))break;
-			count++;
-		}
-		if(count == this.shapes.length-1){
-			System.out.println("YOu lose");
+			if (this.currentShape != null) {
+				if (Gdx.input.isTouched()) {
+					this.currentShape.x = (int) touchPosition.x - this.currentShape.getShapeWidth() / 2;
+					this.currentShape.y = (int) touchPosition.y + this.currentShape.getShapeHeight() / 2;
+				} else {
+					if (table.place(this.currentShape)) {
+						points += (this.currentShape.blocks.length - 1) + (table.clearLines());
+						this.shapes[this.currentShapeID] = null;
+						this.currentShape = null;
+						if (!hasShapes()) {
+							fillShapes();
+						}
+					} else {
+						this.currentShape.release();
+						this.currentShape.x = this.nextXcoordAt(this.currentShapeID);
+						this.currentShape.y = this.nextYcoordAt(this.currentShapeID);
+						this.currentShape = null;
+					}
+				}
+			}
+
+		} else if(gameState == GameState.GAMEOVER_STATE) {
+			//RESET BUTTON
+			if(Gdx.input.justTouched()) {
+				if (touchPosition.x > Configs.RETRYBUTTON_POSITION_X && touchPosition.x < Configs.RETRYBUTTON_POSITION_X + 64) {
+					if (touchPosition.y > Configs.RETRYBUTTON_POSITION_Y && touchPosition.y < Configs.RETRYBUTTON_POSITION_Y + 64) {
+						this.reset();
+						return;
+					}
+				}
+			}
 		}
 	}
 	
@@ -125,6 +133,7 @@ public class TenTen extends ApplicationAdapter {
             batch.begin();
             Assets.font.getData().setScale(1.5f);
             Assets.font.draw(batch, "no moves left", Configs.GAME_WIDTH/2-20, (Configs.GAME_HEIGHT-Configs.HEIGHT_MARGIN)/2+40);
+			batch.draw(Assets.retryButton, Configs.RETRYBUTTON_POSITION_X, Configs.RETRYBUTTON_POSITION_Y);
             batch.end();
 
 		}
@@ -175,7 +184,15 @@ public class TenTen extends ApplicationAdapter {
 		System.out.println(count);
 		return count != 0;
 	}
-	
+
+	public boolean canPlaceShapes(){
+		for (int x = 0; x < 3; x++) {
+			if (this.shapes[x] == null) continue;
+			if (table.isPlaceable(shapes[x])) return true;
+		}
+		return false;
+	}
+
     private int nextXcoordAt(int i) {
         int x = Configs.WIDTH_MARGIN + i * (Configs.SMALL_BLOCK_SIZE * 6);
         return x;

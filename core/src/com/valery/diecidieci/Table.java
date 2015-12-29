@@ -32,7 +32,7 @@ public class Table {
 	}
 
 	public void render(SpriteBatch batch){
-		Texture texture = null;	
+		Texture texture;
 		for(int x = 0; x < Configs.TABLE_SIZE; x++){
 			for(int y = 0; y < Configs.TABLE_SIZE; y++){
 				if(this.blocks[x][y] == null){
@@ -87,7 +87,6 @@ public class Table {
 	}
 	
 	public boolean isPlaceable(Shape shape){
-		System.out.println(Configs.TABLE_SIZE-shape.mapBlocks[0].length);
 		for(int y = 0; y <= Configs.TABLE_SIZE-shape.mapBlocks[0].length; y++){
 			for(int x = 0; x <= Configs.TABLE_SIZE-shape.mapBlocks.length; x++){
 				if(isOccupied(shape, new int[]{x, y}))continue;
